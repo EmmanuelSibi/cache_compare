@@ -8,7 +8,7 @@
 typedef struct {
     int *key_ptr;
     int  value;
-    int  list_id;
+    int  list_id; // change this to enum
 } TwoQEntry;
 
 typedef struct {

@@ -8,7 +8,7 @@
 
 
 typedef struct {
-    int *key_ptr;  
+    int *key_ptr;  // change to int
     int  value;
 } LRUEntry;
 
@@ -17,8 +17,9 @@ typedef struct {
     int capacity;
     int count;
 
+    // change to integer or long
     double hits;
-    double accesses;
+    double accesses; // total
 
     List *lru_list;         // stores LRUEntry* as node->data 
     HashTable *table;       // maps (int*) key =----> ListNode* 
@@ -69,7 +70,7 @@ static void lru_put(Cache *cache_obj, int key, int value)
         LRUEntry *entry = (LRUEntry *)node->data;
         entry->value = value;
         move_node_to_head(cache->lru_list, node);
-       // cache->hits += 1; 
+        //    cache->hits += 1; 
         return;
     }
 

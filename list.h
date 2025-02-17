@@ -12,7 +12,7 @@ typedef struct ListNode {
 typedef struct List {
     ListNode *head;
     ListNode *tail;
-    int count;
+    int count; // size
 } List;
 
 List *list_create(void);

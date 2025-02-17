@@ -8,7 +8,7 @@
 typedef struct {
     int  *key_ptr; 
     int   value;
-    int   ref;      
+    int   ref; // use bool for flag
 } ClockEntry;
 
 typedef struct {

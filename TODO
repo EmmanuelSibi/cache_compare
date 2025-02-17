@@ -1,0 +1,3 @@
+- Hold hit_ratio, access, count, etc in Cache Obj
+- organise files into proper directories
+- common buffer
