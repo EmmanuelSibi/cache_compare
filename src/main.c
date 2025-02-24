@@ -23,6 +23,10 @@ Cache* create_cache_by_type(cache_algo_t algo, int capacity) {
     }
 }
 
+double get_hit_ratio(Cache *cache) {
+    return (double)cache->hits/cache->accessess;
+}
+
 int main(void) {
     int choice, capacity;
     printf("Select Cache Algorithm:\n");
@@ -41,19 +45,27 @@ int main(void) {
         return 1;
     }
     Cache *cache = create_cache_by_type((cache_algo_t)choice, capacity);
-    if (!cache) {
-        fprintf(stderr, "Failed to create cache\n");
-        return 1;
-    }
-    int keys[] = {1, 2, 1,2,3, 4, 5, 6,1,2, 7,1,2 ,8, 9};
+   
+    int keys[] = {1, 2, 1,2,3, 4, 5, 6,1,2,7,1,2,8,9};
     int nkeys = sizeof(keys) / sizeof(keys[0]);
     int value;
     for (int i = 0; i < nkeys; i++) {
         printf("NOW PROCESSING %d\n",keys[i]);
+        cache->accessess++;
         if (!cache->ops->get(cache, keys[i], &value)) {
             cache->ops->put(cache, keys[i], keys[i] * 2);
+        }else{
+            cache->hits++;
         }
     }
+
+    //print content s of data buffer
+    for (int i = 0; i < capacity; i++) {
+        printf("Data Buffer[%d]: key=%d, value=%d\n", i, cache->data_buffer[i].key, cache->data_buffer[i].value);
+    }
+
+    printf("Total ACCESS: %d\n", cache->accessess);
+    printf("Total HITS: %d\n", cache->hits);
     
     //   if (cache->ops->get(cache, 8, &value))
     //         printf("Get key %d: %d\n", 8, value);
@@ -65,7 +77,7 @@ int main(void) {
     //     else
     //         printf("Key %d not found\n", keys[i]);
     // }
-    printf("Cache Hit Ratio: %.2f%%\n", cache->ops->hit_ratio(cache) * 100);
+    printf("Cache Hit Ratio: %.2f%%\n", get_hit_ratio(cache) * 100);
     cache->ops->destroy(cache);
     return 0;
 }

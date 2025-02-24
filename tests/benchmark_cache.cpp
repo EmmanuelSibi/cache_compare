@@ -41,6 +41,7 @@ static void BM_CacheAlgorithm(benchmark::State& state,
         }
         for (int i = 0; i < numOps; i++) {
             int key = 0;
+            cache->accessess++;
         
             key = zipfDist(gen) + 1;
 
@@ -48,8 +49,12 @@ static void BM_CacheAlgorithm(benchmark::State& state,
             if (!cache->ops->get(cache, key, &value)) {
                 cache->ops->put(cache, key, key * 2);
             }
+            else{
+                cache->hits++;
+            }
         }
-        double hitRatio = cache->ops->hit_ratio(cache);
+        double hitRatio =  (double)cache->hits/cache->accessess;
+       // double hitRatio = cache->ops->hit_ratio(cache);
         state.SetLabel(std::to_string(hitRatio * 100) + "% hit ratio");
         cache->ops->destroy(cache);
     }
@@ -117,5 +122,7 @@ BENCHMARK(BM_High_LRU)->Arg(1000);
 BENCHMARK(BM_High_CLOCK)->Arg(1000);
 BENCHMARK(BM_High_2Q)->Arg(1000);
 BENCHMARK(BM_High_ARC)->Arg(1000);
+
+
 
 BENCHMARK_MAIN();

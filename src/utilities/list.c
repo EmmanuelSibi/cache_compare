@@ -6,7 +6,6 @@
 // HERE HASHTABLE ENTRY key_ptr ---> LISTNODE* -> data == LRU/CLOCK/2Q/ARC
 List *list_create(void) {
     List *list = (List *)malloc(sizeof(List));
-    if (!list) exit(EXIT_FAILURE);
     list->head = list->tail = NULL;
     list->count = 0;
     return list;
@@ -14,7 +13,6 @@ List *list_create(void) {
 
 void list_insert_head(List *list, void *data) {
     ListNode *node = (ListNode *)malloc(sizeof(ListNode));
-    if (!node) exit(EXIT_FAILURE);
     node->data = data;
     node->prev = NULL;
     node->next = list->head;
@@ -42,7 +40,6 @@ void list_remove_node(List *list, ListNode *node) {
  ListNode* list_insert_node_head_return(List *list, void *data)
 {
     ListNode *node = (ListNode *)malloc(sizeof(ListNode));
-    if (!node) exit(EXIT_FAILURE);
 
     node->data = data;
     node->prev = NULL;

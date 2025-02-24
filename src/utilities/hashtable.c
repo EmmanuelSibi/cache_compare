@@ -8,10 +8,10 @@ HashTable *hashtable_create(int size,
                             void (*destroy_key)(void *),
                               void (*destroy_value)(void *)) {
     HashTable *ht = (HashTable *)malloc(sizeof(HashTable));
-    if (!ht) exit(EXIT_FAILURE);
+   
     ht->size = size;
     ht->buckets = (HashTableEntry **)calloc(size, sizeof(HashTableEntry *));
-    if (!ht->buckets) exit(EXIT_FAILURE);
+   
     ht->hash_func = hash_func;
     ht->key_cmp = key_cmp;
     ht->destroy_key = destroy_key;
@@ -23,7 +23,7 @@ void hashtable_insert(HashTable *ht, void *key, void *value) {
     unsigned int hash = ht->hash_func(key);
     int index = hash % ht->size;
     HashTableEntry *entry = (HashTableEntry *)malloc(sizeof(HashTableEntry));
-    if (!entry) exit(EXIT_FAILURE);
+  
     entry->key = key;
     entry->value = value;
     entry->next = ht->buckets[index];
